@@ -1,17 +1,13 @@
-# Virtual environments and heavy binary tools
-05_Tools_and_Environment/venv/
-05_Tools_and_Environment/openvsp_bin/
-05_Tools_and_Environment/canvas-mcp/node_modules/
-05_Tools_and_Environment/canvas-mcp/dist/
+# Ignore all project files except the textbook
+02_Design_Task_1_Sizing/
+03_CAD_OpenVSP_Models/
+04_Aerodynamic_Simulations/
+05_Tools_and_Environment/
+06_Overleaf_Report/
 01_Course_Materials/IMS135_Previous_Exams/
-
-# Python cache & temp
-__pycache__/
-*.py[cod]
-*$py.class
+01_Course_Materials/MMS236 Aircraft Design Kick-off.pdf
+01_Course_Materials/lec2.pdf
+01_Course_Materials/lec3.pdf
+01_Course_Materials/split_raymer_chapters.py
 .DS_Store
 *.tmp
-*.log
-06_Overleaf_Report/
-05_Tools_and_Environment/canvas-mcp/
-05_Tools_and_Environment/OpenVSP3Plugin/
