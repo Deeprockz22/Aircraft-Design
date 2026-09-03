@@ -1,0 +1,17 @@
+# Virtual environments and heavy binary tools
+05_Tools_and_Environment/venv/
+05_Tools_and_Environment/openvsp_bin/
+05_Tools_and_Environment/canvas-mcp/node_modules/
+05_Tools_and_Environment/canvas-mcp/dist/
+01_Course_Materials/IMS135_Previous_Exams/
+
+# Python cache & temp
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+*.tmp
+*.log
+06_Overleaf_Report/
+05_Tools_and_Environment/canvas-mcp/
+05_Tools_and_Environment/OpenVSP3Plugin/

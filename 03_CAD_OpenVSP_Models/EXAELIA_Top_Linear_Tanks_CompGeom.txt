@@ -1,0 +1,38 @@
+...Comp Geom...
+13 Num Comps
+28 Total Num Meshes
+18016 Total Num Tris
+
+Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
+ 1043.139    202.895   1319.843    292.816  Fuselage_MainDeck
+  146.546     23.469    118.060     21.566  LH2_Tank_1_Fwd 
+  146.546     21.722    118.060     19.960  LH2_Tank_2_MidFwd
+  146.546     24.209    118.060     22.246  LH2_Tank_3_MidAft
+  146.546     22.667    118.060     20.829  LH2_Tank_4_Aft 
+  701.959    145.039    194.141     45.754  MainWing_Transonic
+  153.462     27.742     20.835      4.296  HorizontalTail 
+  110.580     25.121     19.942      5.167  VerticalTail   
+   32.770      0.000     15.826      0.000  Engine_Inboard_Port
+   32.770     16.699     15.826      9.199  Engine_Inboard_Stbd
+   32.770      0.000     15.826      0.000  Engine_Outboard_Port
+   32.770     17.381     15.826      9.574  Engine_Outboard_Stbd
+ 2726.407    521.758   2090.306    456.279  MeshGeom       
+-------------------------------------------------
+ 5452.813   1048.701   4180.612    907.687  Totals         
+
+Tag_Theo_Area   Tag_Wet_Area    Tag_Name
+     1043.139        202.895    Fuselage_MainDeck_S_Surf0
+      146.546         23.469    LH2_Tank_1_Fwd_S_Surf0
+      146.546         21.722    LH2_Tank_2_MidFwd_S_Surf0
+      146.546         24.209    LH2_Tank_3_MidAft_S_Surf0
+      146.546         22.667    LH2_Tank_4_Aft_S_Surf0
+      350.979        145.039    MainWing_Transonic_S_Surf0
+       76.731         27.742    HorizontalTail_S_Surf0
+      110.580         25.121    VerticalTail_S_Surf0
+       32.770         16.699    Engine_Inboard_Stbd_S_Surf0
+       32.770         17.381    Engine_Outboard_Stbd_S_Surf0
+     2298.696        521.758    MeshGeom_S_Surf0
+WARNING: 3 open meshes merged
+     Merged: MainWing_Transonic
+     Merged: HorizontalTail
+     Merged: MeshGeom
