@@ -1,6 +1,7 @@
-
+%% Flight Mission Profile Generator in MATLAB
 % Generates a clean, textbook-style aircraft flight mission profile
-% Includes: Take-off, Cruise (constant altitude), Descent, Loiter, Land, Diversion, and Reserve
+% Includes: Take-off, Cruise (FL350), Descent, Loiter (FL250), Land, Diversion, and Reserve
+% Initial flight length (Main mission): 12,500 km
 
 clear; clc; close all;
 
@@ -20,10 +21,13 @@ plot([x_min, x_max, x_max, x_min, x_min], ...
      [y_min, y_min, y_max, y_max, y_min], ...
      'k-', 'LineWidth', 1.6);
 
-%% 3. Horizontal Flight Level Reference Lines
-y_FL0   = 6;
-y_FL15  = 16;
-y_FL100 = 42;
+%% 3. Cruising Altitude Definition & Flight Levels
+y_FL0   = 6.0;   % Ground level (FL0)
+y_FL15  = 16.0;  % Initial departure level (FL15)
+y_FL350 = 74.0;  % Cruising altitude level (FL350)
+
+% Loiter altitude proportional to 25,000 ft:
+y_FL250 = y_FL0 + (250 / 350) * (y_FL350 - y_FL0); % FL250 (54.6)
 
 % FL0 (Ground level)
 plot([x_min, x_max], [y_FL0, y_FL0], 'k:', 'LineWidth', 1.1);
@@ -35,9 +39,14 @@ plot([x_min, x_max], [y_FL15, y_FL15], 'k:', 'LineWidth', 1.1);
 text(40, y_FL15 + 2.2, 'FL15', 'FontName', 'Times New Roman', ...
      'FontSize', 11, 'FontWeight', 'bold', 'FontAngle', 'italic', 'HorizontalAlignment', 'center');
 
-% FL100
-plot([x_min, x_max], [y_FL100, y_FL100], 'k:', 'LineWidth', 1.1);
-text(40, y_FL100 + 2.2, 'FL100', 'FontName', 'Times New Roman', ...
+% FL250 (Loiter level)
+plot([x_min, x_max], [y_FL250, y_FL250], 'k:', 'LineWidth', 1.1);
+text(61, y_FL250 + 2.2, 'FL250', 'FontName', 'Times New Roman', ...
+     'FontSize', 11, 'FontWeight', 'bold', 'FontAngle', 'italic', 'HorizontalAlignment', 'center');
+
+% FL350 (Cruise level)
+plot([x_min, x_max], [y_FL350, y_FL350], 'k:', 'LineWidth', 1.1);
+text(36, y_FL350 + 2.4, 'FL350', 'FontName', 'Times New Roman', ...
      'FontSize', 11, 'FontWeight', 'bold', 'FontAngle', 'italic', 'HorizontalAlignment', 'center');
 
 %% 4. Vertical Phase Boundary Lines (Dashed)
@@ -63,21 +72,19 @@ text(59, y_max - 5, 'Loiter',     font_opts{:});
 text(69, y_max - 5, 'Land',       font_opts{:});
 text(79, y_max - 5, 'Diversion',  font_opts{:});
 
-%% 6. Flight Profile Trajectory (Constant Cruise Altitude)
-y_cruise = 74.0; % Constant cruise level (no step-climb)
-
+%% 6. Flight Profile Trajectory (Cruising at FL350, Loiter at FL250)
 x_profile = [
      5.0, ...  % Ground start
      8.0, ...  % Take-off roll begin
     11.5, ...  % Initial climb to FL15
     15.0, ...  % Level segment at FL15
-    19.5, ...  % Climb passing FL100
-    25.0, ...  % Reach cruise altitude
-    47.0, ...  % End of cruise (constant altitude throughout)
-    57.0, ...  % Reach loiter altitude (FL100)
-    65.0, ...  % End of loiter / holding
-    72.0, ...  % Touchdown / landing at FL0
-    76.0, ...  % Missed approach / diversion decision on ground
+    19.5, ...  % Intermediate climb
+    25.0, ...  % Reach cruise altitude (FL350)
+    47.0, ...  % End of cruise at FL350
+    57.0, ...  % Reach loiter altitude (FL250)
+    65.0, ...  % End of loiter at FL250
+    72.0, ...  % Touchdown / landing at destination (FL0)
+    76.0, ...  % Diversion decision
     82.5, ...  % Climb to alternate cruise altitude
     88.5, ...  % End of diversion cruise
     93.5, ...  % Alternate landing touchdown
@@ -89,15 +96,15 @@ y_profile = [
     y_FL0, ...
     y_FL15, ...
     y_FL15, ...
-    y_FL100, ...
-    y_cruise, ...
-    y_cruise, ...
-    y_FL100, ...
-    y_FL100, ...
+    36.0, ...
+    y_FL350, ...
+    y_FL350, ...
+    y_FL250, ...
+    y_FL250, ...
     y_FL0, ...
     y_FL0, ...
-    53.0, ...
-    53.0, ...
+    48.0, ...
+    48.0, ...
     y_FL0, ...
     y_FL0
 ];
@@ -119,8 +126,8 @@ plot([72.0,  72.0],  [y_min, -18], 'k-',  'LineWidth', 0.8);
 plot([76.0,  76.0],  [y_min, -10], 'k-',  'LineWidth', 0.8);
 plot([93.5,  93.5],  [y_min, -26], 'k-',  'LineWidth', 0.8);
 
-% 1. Main mission bracket (Take-off to Land)
-draw_dimension_bracket(ax, 8.0, 72.0, -7.0, 'Main mission', false);
+% 1. Main mission bracket with 12,500 km initial flight length
+draw_dimension_bracket(ax, 8.0, 72.0, -7.0, 'Main mission (12,500 km)', false);
 
 % 2. Diversion bracket (sub-segment)
 draw_dimension_bracket(ax, 76.0, 93.5, -7.0, 'Diversion', false);
@@ -140,7 +147,7 @@ axis(ax, 'off'); % Hide default axes for a clean publication-ready look
 % exportgraphics(fig, 'flight_mission_profile.png', 'Resolution', 300);
 % exportgraphics(fig, 'flight_mission_profile.pdf', 'ContentType', 'vector');
 
-disp('Flight mission profile diagram successfully generated in MATLAB!');
+disp('Flight mission profile diagram with FL250 and 12,500 km successfully generated in MATLAB!');
 
 
 %% === HELPER FUNCTIONS ===
