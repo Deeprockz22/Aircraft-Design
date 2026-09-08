@@ -1,4 +1,4 @@
-%% Flight Mission Profile Generator in MATLAB
+
 % Generates a clean, textbook-style aircraft flight mission profile
 % Includes: Take-off, Cruise (constant altitude), Descent, Loiter, Land, Diversion, and Reserve
 
