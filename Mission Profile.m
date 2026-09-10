@@ -112,8 +112,8 @@ y_profile = [
 % Draw the flight trajectory curve
 plot(x_profile, y_profile, 'k-', 'LineWidth', 2.4);
 
-%% 7. Top Weight Labels & Downward Arrows (TOW, Landing weight, ZFW)
-draw_down_arrow(ax, 8.0,  y_max + 7.5, y_max, 'TOW');
+%% 7. Top Weight Labels & Downward Arrows (MTOW, Landing weight, ZFW)
+draw_down_arrow(ax, 8.0,  y_max + 7.5, y_max, 'MTOW');
 draw_down_arrow(ax, 72.0, y_max + 7.5, y_max, 'Landing weight');
 draw_down_arrow(ax, 93.5, y_max + 7.5, y_max, 'ZFW');
 
