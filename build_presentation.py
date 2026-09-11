@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
 =============================================================================
-Minimalist Presentation Builder: EXAELIA 80m Hydrogen BWB (MMS236 DT1)
+Seamless Blended Minimalist Presentation Builder: EXAELIA 80m BWB (MMS236 DT1)
 =============================================================================
 Course: MMS236 Aircraft Design | Chalmers University of Technology
 Group 13: Johan Persson, Sai Srinivasa Manideep Jakka, Tobias Hilltorp, William Gustavsson
 
-Design Language: Ultra-Clean Minimal Dark Studio
-- Generous whitespace, no cluttered text blocks
-- Large high-impact numbers and clean typography
-- Hero images centered with elegant dark framing
+Visual Aesthetic:
+- Seamless Dark Studio: All visuals natively rendered or alpha-blended directly
+  into the #0A0D14 background with zero stark borders or mismatched white boxes.
+- Swiss Minimalist Typography: Helvetica Neue & Arial with generous whitespace.
+- Luminous Accents: Electric Cyan (#38BDF8), Aerodynamic Gold (#FACC15), Slate.
 =============================================================================
 """
 
@@ -24,11 +25,12 @@ from pptx.enum.shapes import MSO_SHAPE
 # -----------------------------------------------------------------------------
 # Color Palette
 # -----------------------------------------------------------------------------
-BG_COLOR     = RGBColor(10, 13, 20)       # #0A0D14 Deep Carbon Matte
-CARD_BG      = RGBColor(17, 22, 34)       # #111622 Minimalist Surface
-BORDER_COLOR = RGBColor(30, 41, 59)       # #1E293B Subtle Border
+BG_COLOR     = RGBColor(10, 13, 20)       # #0A0D14 Deep Carbon Matte Canvas
+CARD_BG      = RGBColor(17, 22, 34)       # #111622 Subtle Card Background
+BORDER_COLOR = RGBColor(30, 41, 59)       # #1E293B Sleek Border Stroke
 CYAN_ACCENT  = RGBColor(56, 189, 248)     # #38BDF8 Electric Cyan
-TEXT_WHITE   = RGBColor(248, 250, 252)    # #F8FAFC Crisp White
+GOLD_ACCENT  = RGBColor(250, 204, 21)     # #FACC15 Accent Gold
+TEXT_WHITE   = RGBColor(248, 250, 252)    # #F8FAFC Crisp Platinum
 TEXT_LIGHT   = RGBColor(203, 213, 225)    # #CBD5E1 Slate 300
 TEXT_MUTED   = RGBColor(148, 163, 184)    # #94A3B8 Slate 400
 TEXT_SUBTLE  = RGBColor(100, 116, 139)    # #64748B Slate 500
@@ -43,8 +45,8 @@ def set_slide_background(slide):
     fill.fore_color.rgb = BG_COLOR
 
 def add_header(slide, number_tag, title_text):
-    # Category / Number tag
-    tb_tag = slide.shapes.add_textbox(Inches(0.9), Inches(0.55), Inches(11.5), Inches(0.25))
+    # Category tag
+    tb_tag = slide.shapes.add_textbox(Inches(0.9), Inches(0.52), Inches(11.5), Inches(0.25))
     tf_tag = tb_tag.text_frame
     tf_tag.word_wrap = True
     tf_tag.margin_left = tf_tag.margin_right = tf_tag.margin_top = tf_tag.margin_bottom = 0
@@ -56,7 +58,7 @@ def add_header(slide, number_tag, title_text):
     p_tag.font.color.rgb = CYAN_ACCENT
 
     # Minimalist Title
-    tb_title = slide.shapes.add_textbox(Inches(0.9), Inches(0.82), Inches(11.5), Inches(0.5))
+    tb_title = slide.shapes.add_textbox(Inches(0.9), Inches(0.78), Inches(11.5), Inches(0.5))
     tf_title = tb_title.text_frame
     tf_title.word_wrap = True
     tf_title.margin_left = tf_title.margin_right = tf_title.margin_top = tf_title.margin_bottom = 0
@@ -81,20 +83,20 @@ def build_minimal_presentation(output_paths):
     prs.slide_height = Inches(7.500)
     blank_layout = prs.slide_layouts[6]
 
-    asset_dir = "/Users/jakkasaisrinivasamanideep/Documents/MMS236/04_Presentation_Assets"
-    img1_sketch   = os.path.join(asset_dir, "image1.jpeg")
-    img2_mission  = os.path.join(asset_dir, "image2.jpeg")
-    img3_sfc      = os.path.join(asset_dir, "image3.png")
-    img4_concept  = os.path.join(asset_dir, "image4.jpeg")
-    img_cad_3d    = "/Users/jakkasaisrinivasamanideep/Documents/MMS236/03_CAD_OpenVSP_Models/exaelia_bwb_80m_3d_views.png"
+    blended_dir = "/Users/jakkasaisrinivasamanideep/Documents/MMS236/04_Presentation_Assets/blended"
+    img1_blended = os.path.join(blended_dir, "image1_blended.png")
+    img2_blended = os.path.join(blended_dir, "mission_native_chart.png")
+    img3_blended = os.path.join(blended_dir, "sfc_native_chart.png")
+    img4_blended = os.path.join(blended_dir, "image4_blended.png")
+    img_cad_3d   = os.path.join(blended_dir, "cad3d_blended.png")
 
     # =========================================================================
-    # SLIDE 1: Title Slide
+    # SLIDE 1: Title Slide (Swiss Minimalist)
     # =========================================================================
     slide1 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide1)
 
-    # University & Course Header
+    # University & Course Tag
     tb = slide1.shapes.add_textbox(Inches(1.2), Inches(1.8), Inches(11.0), Inches(0.35))
     tf = tb.text_frame
     p = tf.paragraphs[0]
@@ -140,7 +142,7 @@ def build_minimal_presentation(output_paths):
     p_a2.font.color.rgb = TEXT_MUTED
     p_a2.space_before = Pt(4)
 
-    # Key Specs Strip at bottom
+    # Key Specs Strip (Floating Minimal Bar)
     add_card(slide1, Inches(1.2), Inches(5.8), Inches(10.933), Inches(0.85))
     tb_stats = slide1.shapes.add_textbox(Inches(1.4), Inches(5.95), Inches(10.533), Inches(0.55))
     tf_stats = tb_stats.text_frame
@@ -153,18 +155,17 @@ def build_minimal_presentation(output_paths):
     p_st.font.color.rgb = CYAN_ACCENT
 
     # =========================================================================
-    # SLIDE 2: First Sketch
+    # SLIDE 2: First Sketch (Seamlessly Blended Luminous Pencil Art)
     # =========================================================================
     slide2 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide2)
     add_header(slide2, "Concept Origin", "First sketch")
 
-    # Centered Sketch Card (height = 4.8 in, aspect ratio 0.707 -> width = 3.40 in)
-    add_card(slide2, Inches(4.7), Inches(1.5), Inches(3.933), Inches(5.0))
-    if os.path.exists(img1_sketch):
-        slide2.shapes.add_picture(img1_sketch, Inches(4.9), Inches(1.6), height=Inches(4.8))
+    # Seamlessly Floating Sketch
+    if os.path.exists(img1_blended):
+        slide2.shapes.add_picture(img1_blended, Inches(4.85), Inches(1.45), height=Inches(5.0))
 
-    # Caption Tag
+    # Minimal Caption
     tb_cap2 = slide2.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
     tf_cap2 = tb_cap2.text_frame
     p_c2 = tf_cap2.paragraphs[0]
@@ -175,16 +176,15 @@ def build_minimal_presentation(output_paths):
     p_c2.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
-    # SLIDE 3: Sizing Mission
+    # SLIDE 3: Sizing Mission (Native High-Res Vector Chart)
     # =========================================================================
     slide3 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide3)
     add_header(slide3, "Mission Profile", "Sizing mission")
 
-    # Centered Mission Diagram Card (height = 4.7 in, aspect ratio 1.278 -> width = 6.0 in)
-    add_card(slide3, Inches(3.3), Inches(1.5), Inches(6.733), Inches(5.0))
-    if os.path.exists(img2_mission):
-        slide3.shapes.add_picture(img2_mission, Inches(3.66), Inches(1.65), height=Inches(4.7))
+    # Seamlessly Blended Mission Vector Chart
+    if os.path.exists(img2_blended):
+        slide3.shapes.add_picture(img2_blended, Inches(1.8), Inches(1.45), width=Inches(9.733))
 
     # Caption Tag
     tb_cap3 = slide3.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
@@ -197,16 +197,15 @@ def build_minimal_presentation(output_paths):
     p_c3.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
-    # SLIDE 4: Engine Performance
+    # SLIDE 4: Engine Performance (Native Vector SFC Chart + Metrics)
     # =========================================================================
     slide4 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide4)
     add_header(slide4, "Propulsion Modeling", "Engine performance")
 
-    # Left: Clean Chart Card
-    add_card(slide4, Inches(0.9), Inches(1.5), Inches(6.6), Inches(5.0))
-    if os.path.exists(img3_sfc):
-        slide4.shapes.add_picture(img3_sfc, Inches(1.15), Inches(1.75), width=Inches(6.1))
+    # Left: Seamlessly Blended SFC Chart
+    if os.path.exists(img3_blended):
+        slide4.shapes.add_picture(img3_blended, Inches(0.9), Inches(1.45), width=Inches(6.6))
 
     # Right: 2 Minimal Data Cards
     # Card 1: 2050 Trend
@@ -262,13 +261,12 @@ def build_minimal_presentation(output_paths):
     p.space_before = Pt(3)
 
     # =========================================================================
-    # SLIDE 5: Aerodynamics
+    # SLIDE 5: Aerodynamics (4 Clean Metric Tiles)
     # =========================================================================
     slide5 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide5)
     add_header(slide5, "Aerodynamic Efficiency", "Aerodynamics")
 
-    # 4 Large Clean Data Tiles (2x2 Grid)
     aero_cards = [
         ("ASPECT RATIO", "9.5", "Transonic planform optimum", TEXT_WHITE),
         ("WETTED RATIO (Swet / Sref)", "2.2", "High volumetric packaging efficiency", CYAN_ACCENT),
@@ -309,13 +307,12 @@ def build_minimal_presentation(output_paths):
         p_desc.space_before = Pt(3)
 
     # =========================================================================
-    # SLIDE 6: MTOW
+    # SLIDE 6: MTOW (3 Clean Metric Tiles)
     # =========================================================================
     slide6 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide6)
     add_header(slide6, "Mass Sizing", "MTOW")
 
-    # 3 Large Minimalist Cards (3 Columns)
     mtow_cards = [
         ("MAXIMUM TAKE-OFF WEIGHT", "235,460 kg", "~235.5 tonnes", "Converged mission sizing", TEXT_WHITE),
         ("OPERATING EMPTY WEIGHT", "155,600 kg", "We / W0 = 0.66", "Raymer statistical method", CYAN_ACCENT),
@@ -361,16 +358,15 @@ def build_minimal_presentation(output_paths):
         p_note.space_before = Pt(28)
 
     # =========================================================================
-    # SLIDE 7: The Concept
+    # SLIDE 7: The Concept (Seamless Blueprint Linework)
     # =========================================================================
     slide7 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide7)
     add_header(slide7, "Configuration", "The concept")
 
-    # Centered Concept Stage Card (height = 4.8 in, aspect ratio 1.339 -> width = 6.43 in)
-    add_card(slide7, Inches(3.0), Inches(1.5), Inches(7.333), Inches(5.0))
-    if os.path.exists(img4_concept):
-        slide7.shapes.add_picture(img4_concept, Inches(3.45), Inches(1.6), height=Inches(4.8))
+    # Seamlessly Floating Blueprint Image
+    if os.path.exists(img4_blended):
+        slide7.shapes.add_picture(img4_blended, Inches(3.45), Inches(1.45), height=Inches(5.0))
 
     # Caption Tag
     tb_cap7 = slide7.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
@@ -383,16 +379,15 @@ def build_minimal_presentation(output_paths):
     p_c7.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
-    # SLIDE 8: 3D CAD Model (OpenVSP)
+    # SLIDE 8: 3D CAD Model (Seamlessly Blended OpenVSP Render)
     # =========================================================================
     slide8 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide8)
     add_header(slide8, "Parametric CAD", "3D CAD model")
 
-    # Centered CAD Stage Card (height = 4.8 in, aspect ratio 1.407 -> width = 6.75 in)
-    add_card(slide8, Inches(2.9), Inches(1.5), Inches(7.533), Inches(5.0))
+    # Seamlessly Floating CAD Render
     if os.path.exists(img_cad_3d):
-        slide8.shapes.add_picture(img_cad_3d, Inches(3.29), Inches(1.6), height=Inches(4.8))
+        slide8.shapes.add_picture(img_cad_3d, Inches(3.2), Inches(1.45), height=Inches(5.0))
 
     # Caption Tag
     tb_cap8 = slide8.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
@@ -405,7 +400,7 @@ def build_minimal_presentation(output_paths):
     p_c8.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
-    # SLIDE 9: References
+    # SLIDE 9: References (Clean Minimalist Links)
     # =========================================================================
     slide9 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide9)
@@ -448,7 +443,7 @@ def build_minimal_presentation(output_paths):
         p_url.font.color.rgb = TEXT_MUTED
         p_url.space_before = Pt(4)
 
-    # Save to all target locations
+    # Save to all targets
     for p in output_paths:
         os.makedirs(os.path.dirname(os.path.abspath(p)), exist_ok=True)
         prs.save(p)
