@@ -159,13 +159,13 @@ def build_minimal_presentation(output_paths):
     set_slide_background(slide2)
     add_header(slide2, "Concept Origin", "First sketch")
 
-    # Centered Sketch Card
-    add_card(slide2, Inches(4.5), Inches(1.5), Inches(4.333), Inches(5.2))
+    # Centered Sketch Card (height = 4.8 in, aspect ratio 0.707 -> width = 3.40 in)
+    add_card(slide2, Inches(4.7), Inches(1.5), Inches(3.933), Inches(5.0))
     if os.path.exists(img1_sketch):
-        slide2.shapes.add_picture(img1_sketch, Inches(4.7), Inches(1.65), width=Inches(3.933))
+        slide2.shapes.add_picture(img1_sketch, Inches(4.9), Inches(1.6), height=Inches(4.8))
 
     # Caption Tag
-    tb_cap2 = slide2.shapes.add_textbox(Inches(0.9), Inches(6.85), Inches(11.533), Inches(0.35))
+    tb_cap2 = slide2.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
     tf_cap2 = tb_cap2.text_frame
     p_c2 = tf_cap2.paragraphs[0]
     p_c2.alignment = PP_ALIGN.CENTER
@@ -181,13 +181,13 @@ def build_minimal_presentation(output_paths):
     set_slide_background(slide3)
     add_header(slide3, "Mission Profile", "Sizing mission")
 
-    # Centered Mission Diagram Card
-    add_card(slide3, Inches(2.8), Inches(1.5), Inches(7.733), Inches(5.1))
+    # Centered Mission Diagram Card (height = 4.7 in, aspect ratio 1.278 -> width = 6.0 in)
+    add_card(slide3, Inches(3.3), Inches(1.5), Inches(6.733), Inches(5.0))
     if os.path.exists(img2_mission):
-        slide3.shapes.add_picture(img2_mission, Inches(3.1), Inches(1.68), width=Inches(7.133))
+        slide3.shapes.add_picture(img2_mission, Inches(3.66), Inches(1.65), height=Inches(4.7))
 
     # Caption Tag
-    tb_cap3 = slide3.shapes.add_textbox(Inches(0.9), Inches(6.85), Inches(11.533), Inches(0.35))
+    tb_cap3 = slide3.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
     tf_cap3 = tb_cap3.text_frame
     p_c3 = tf_cap3.paragraphs[0]
     p_c3.alignment = PP_ALIGN.CENTER
@@ -204,14 +204,14 @@ def build_minimal_presentation(output_paths):
     add_header(slide4, "Propulsion Modeling", "Engine performance")
 
     # Left: Clean Chart Card
-    add_card(slide4, Inches(0.9), Inches(1.5), Inches(6.6), Inches(5.2))
+    add_card(slide4, Inches(0.9), Inches(1.5), Inches(6.6), Inches(5.0))
     if os.path.exists(img3_sfc):
-        slide4.shapes.add_picture(img3_sfc, Inches(1.15), Inches(1.85), width=Inches(6.1))
+        slide4.shapes.add_picture(img3_sfc, Inches(1.15), Inches(1.75), width=Inches(6.1))
 
     # Right: 2 Minimal Data Cards
     # Card 1: 2050 Trend
-    add_card(slide4, Inches(7.8), Inches(1.5), Inches(4.633), Inches(2.45))
-    tb4_1 = slide4.shapes.add_textbox(Inches(8.1), Inches(1.75), Inches(4.0), Inches(1.9))
+    add_card(slide4, Inches(7.8), Inches(1.5), Inches(4.633), Inches(2.35))
+    tb4_1 = slide4.shapes.add_textbox(Inches(8.1), Inches(1.7), Inches(4.0), Inches(1.9))
     tf4_1 = tb4_1.text_frame
     p = tf4_1.paragraphs[0]
     p.text = "2050 SFC TREND (JET-A)"
@@ -223,21 +223,21 @@ def build_minimal_presentation(output_paths):
     p = tf4_1.add_paragraph()
     p.text = "12.0 mg/Ns"
     p.font.name = FONT_HEADING
-    p.font.size = Pt(32)
+    p.font.size = Pt(30)
     p.font.bold = True
     p.font.color.rgb = TEXT_WHITE
-    p.space_before = Pt(4)
+    p.space_before = Pt(3)
 
     p = tf4_1.add_paragraph()
     p.text = "Baseline historical turbofan efficiency trend"
     p.font.name = FONT_BODY
     p.font.size = Pt(11)
     p.font.color.rgb = TEXT_LIGHT
-    p.space_before = Pt(4)
+    p.space_before = Pt(3)
 
     # Card 2: LH2 Equivalent
-    add_card(slide4, Inches(7.8), Inches(4.25), Inches(4.633), Inches(2.45))
-    tb4_2 = slide4.shapes.add_textbox(Inches(8.1), Inches(4.5), Inches(4.0), Inches(1.9))
+    add_card(slide4, Inches(7.8), Inches(4.15), Inches(4.633), Inches(2.35))
+    tb4_2 = slide4.shapes.add_textbox(Inches(8.1), Inches(4.35), Inches(4.0), Inches(1.9))
     tf4_2 = tb4_2.text_frame
     p = tf4_2.paragraphs[0]
     p.text = "LH2 EQUIVALENT SFC"
@@ -249,17 +249,17 @@ def build_minimal_presentation(output_paths):
     p = tf4_2.add_paragraph()
     p.text = "4.8 mg/Ns"
     p.font.name = FONT_HEADING
-    p.font.size = Pt(36)
+    p.font.size = Pt(34)
     p.font.bold = True
     p.font.color.rgb = CYAN_ACCENT
-    p.space_before = Pt(4)
+    p.space_before = Pt(3)
 
     p = tf4_2.add_paragraph()
     p.text = "2.8× higher energy density (120 MJ/kg vs 42.8 MJ/kg)"
     p.font.name = FONT_BODY
     p.font.size = Pt(11)
     p.font.color.rgb = TEXT_LIGHT
-    p.space_before = Pt(4)
+    p.space_before = Pt(3)
 
     # =========================================================================
     # SLIDE 5: Aerodynamics
@@ -279,11 +279,11 @@ def build_minimal_presentation(output_paths):
         row = idx // 2
         col_idx = idx % 2
         bx = Inches(0.9 + col_idx * 5.9)
-        by = Inches(1.5 + row * 2.7)
+        by = Inches(1.5 + row * 2.6)
         
-        add_card(slide5, bx, by, Inches(5.633), Inches(2.45))
+        add_card(slide5, bx, by, Inches(5.633), Inches(2.35))
         
-        tb = slide5.shapes.add_textbox(bx + Inches(0.4), by + Inches(0.35), Inches(4.8), Inches(1.75))
+        tb = slide5.shapes.add_textbox(bx + Inches(0.4), by + Inches(0.3), Inches(4.8), Inches(1.75))
         tf = tb.text_frame
         
         p = tf.paragraphs[0]
@@ -296,7 +296,7 @@ def build_minimal_presentation(output_paths):
         p_val = tf.add_paragraph()
         p_val.text = val
         p_val.font.name = FONT_HEADING
-        p_val.font.size = Pt(40)
+        p_val.font.size = Pt(38)
         p_val.font.bold = True
         p_val.font.color.rgb = col
         p_val.space_before = Pt(2)
@@ -304,9 +304,9 @@ def build_minimal_presentation(output_paths):
         p_desc = tf.add_paragraph()
         p_desc.text = desc
         p_desc.font.name = FONT_BODY
-        p_desc.font.size = Pt(12)
+        p_desc.font.size = Pt(11.5)
         p_desc.font.color.rgb = TEXT_LIGHT
-        p_desc.space_before = Pt(4)
+        p_desc.space_before = Pt(3)
 
     # =========================================================================
     # SLIDE 6: MTOW
@@ -323,11 +323,11 @@ def build_minimal_presentation(output_paths):
     ]
     for idx, (title, val, sub, note, col) in enumerate(mtow_cards):
         bx = Inches(0.9 + idx * 3.9)
-        by = Inches(1.6)
+        by = Inches(1.5)
         
-        add_card(slide6, bx, by, Inches(3.733), Inches(5.1))
+        add_card(slide6, bx, by, Inches(3.733), Inches(5.0))
         
-        tb = slide6.shapes.add_textbox(bx + Inches(0.35), by + Inches(0.4), Inches(3.0), Inches(4.3))
+        tb = slide6.shapes.add_textbox(bx + Inches(0.35), by + Inches(0.4), Inches(3.0), Inches(4.2))
         tf = tb.text_frame
         
         p = tf.paragraphs[0]
@@ -367,13 +367,13 @@ def build_minimal_presentation(output_paths):
     set_slide_background(slide7)
     add_header(slide7, "Configuration", "The concept")
 
-    # Centered Concept Stage Card
-    add_card(slide7, Inches(2.2), Inches(1.5), Inches(8.933), Inches(5.2))
+    # Centered Concept Stage Card (height = 4.8 in, aspect ratio 1.339 -> width = 6.43 in)
+    add_card(slide7, Inches(3.0), Inches(1.5), Inches(7.333), Inches(5.0))
     if os.path.exists(img4_concept):
-        slide7.shapes.add_picture(img4_concept, Inches(2.45), Inches(1.65), width=Inches(8.433))
+        slide7.shapes.add_picture(img4_concept, Inches(3.45), Inches(1.6), height=Inches(4.8))
 
     # Caption Tag
-    tb_cap7 = slide7.shapes.add_textbox(Inches(0.9), Inches(6.85), Inches(11.533), Inches(0.35))
+    tb_cap7 = slide7.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
     tf_cap7 = tb_cap7.text_frame
     p_c7 = tf_cap7.paragraphs[0]
     p_c7.alignment = PP_ALIGN.CENTER
@@ -389,13 +389,13 @@ def build_minimal_presentation(output_paths):
     set_slide_background(slide8)
     add_header(slide8, "Parametric CAD", "3D CAD model")
 
-    # Centered CAD Stage Card
-    add_card(slide8, Inches(2.2), Inches(1.5), Inches(8.933), Inches(5.2))
+    # Centered CAD Stage Card (height = 4.8 in, aspect ratio 1.407 -> width = 6.75 in)
+    add_card(slide8, Inches(2.9), Inches(1.5), Inches(7.533), Inches(5.0))
     if os.path.exists(img_cad_3d):
-        slide8.shapes.add_picture(img_cad_3d, Inches(2.45), Inches(1.65), width=Inches(8.433))
+        slide8.shapes.add_picture(img_cad_3d, Inches(3.29), Inches(1.6), height=Inches(4.8))
 
     # Caption Tag
-    tb_cap8 = slide8.shapes.add_textbox(Inches(0.9), Inches(6.85), Inches(11.533), Inches(0.35))
+    tb_cap8 = slide8.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
     tf_cap8 = tb_cap8.text_frame
     p_c8 = tf_cap8.paragraphs[0]
     p_c8.alignment = PP_ALIGN.CENTER
