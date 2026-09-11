@@ -317,55 +317,96 @@ def build_presentation(output_paths):
     p_loiter.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
-    # SLIDE 6: MTOW (User's Updated Numbers)
+    # SLIDE 6: MTOW (Mass Sizing Calculation & Buildup)
     # =========================================================================
     slide6 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide6)
-    add_header(slide6, "MTOW", "Mass Sizing")
+    add_header(slide6, "MTOW & Mass Sizing", "Mass Sizing")
 
-    mtow_cards = [
-        ("ASSUMPTION", "Aircraft design book", "Raymer statistical empty weight buildup method", "Raymer Methodology"),
-        ("EMPTY WEIGHT FRACTION", "0.56", "We / W0 = 155,600 / 275,460 kg", "MTOW = 275,460 kg (~275.5 t)"),
-        ("TANK MASS", "35,400 kg", "6 tanks × 5,900 kg", "Gravimetric index Gi = 0.50")
+    # Top Banner: Raymer Sizing Equation & Exact Calculation
+    add_card(slide6, Inches(0.9), Inches(1.45), Inches(11.533), Inches(1.75))
+    tb_eq = slide6.shapes.add_textbox(Inches(1.2), Inches(1.6), Inches(11.0), Inches(1.45))
+    tf_eq = tb_eq.text_frame
+    tf_eq.word_wrap = True
+
+    p = tf_eq.paragraphs[0]
+    p.text = "TAKEOFF WEIGHT SIZING EQUATION (RAYMER METHOD)"
+    p.font.name = FONT_BODY
+    p.font.size = Pt(10.5)
+    p.font.bold = True
+    p.font.color.rgb = TEXT_MUTED
+
+    p_form = tf_eq.add_paragraph()
+    p_form.text = "W0 = ( W_payload + W_crew )  /  [ 1 − ( We / W0 ) − ( Wf / W0 ) ]"
+    p_form.font.name = FONT_HEADING
+    p_form.font.size = Pt(17)
+    p_form.font.bold = True
+    p_form.font.color.rgb = TEXT_BLACK
+    p_form.space_before = Pt(3)
+
+    p_calc = tf_eq.add_paragraph()
+    p_calc.text = "W0 = ( 53,750 kg + 1,260 kg )  /  [ 1 − 0.565 − 0.235 ]  =  55,010 kg / 0.200  =  275,460 kg  (~275.5 t)"
+    p_calc.font.name = FONT_HEADING
+    p_calc.font.size = Pt(14)
+    p_calc.font.bold = True
+    p_calc.font.color.rgb = TEXT_DARK
+    p_calc.space_before = Pt(4)
+
+    # Bottom 4 Mass Breakdown Pillars
+    pillars = [
+        ("EMPTY WEIGHT (We)", "155,600 kg", "We / W0 = 0.56 (56.5%)", "Airframe: 120,200 kg (43.6%)\nTanks: 35,400 kg (6 × 5,900 kg)"),
+        ("DESIGN PAYLOAD", "53,750 kg", "19.5% of MTOW", "430 Pax @ 100 kg = 43,000 kg\nContainerized Cargo = 10,750 kg"),
+        ("MISSION LH2 FUEL", "64,850 kg", "Wf / W0 = 0.235 (23.5%)", "Breguet cruise (12,500 km)\n200 nm diversion + 30 min loiter"),
+        ("FLIGHT CREW", "1,260 kg", "0.5% of MTOW", "2 Flight Deck Pilots\n10 Cabin Crew Attendants")
     ]
-    for idx, (lbl, val, formula, note) in enumerate(mtow_cards):
-        bx = Inches(0.9 + idx * 3.9)
-        by = Inches(1.5)
-        
-        add_card(slide6, bx, by, Inches(3.733), Inches(5.0))
-        
-        tb = slide6.shapes.add_textbox(bx + Inches(0.35), by + Inches(0.4), Inches(3.0), Inches(4.2))
+    for idx, (title, val, sub, desc) in enumerate(pillars):
+        bx = Inches(0.9 + idx * 2.92)
+        by = Inches(3.4)
+        add_card(slide6, bx, by, Inches(2.78), Inches(3.3))
+
+        tb = slide6.shapes.add_textbox(bx + Inches(0.25), by + Inches(0.3), Inches(2.3), Inches(2.8))
         tf = tb.text_frame
-        
+        tf.word_wrap = True
+
         p = tf.paragraphs[0]
-        p.text = lbl
+        p.text = title
         p.font.name = FONT_BODY
-        p.font.size = Pt(11)
+        p.font.size = Pt(10)
         p.font.bold = True
         p.font.color.rgb = TEXT_MUTED
 
         p_val = tf.add_paragraph()
         p_val.text = val
         p_val.font.name = FONT_HEADING
-        p_val.font.size = Pt(26 if len(val) > 10 else 38)
+        p_val.font.size = Pt(22)
         p_val.font.bold = True
         p_val.font.color.rgb = TEXT_BLACK
-        p_val.space_before = Pt(8)
+        p_val.space_before = Pt(4)
 
-        p_form = tf.add_paragraph()
-        p_form.text = formula
-        p_form.font.name = FONT_HEADING
-        p_form.font.size = Pt(13.5)
-        p_form.font.bold = True
-        p_form.font.color.rgb = TEXT_DARK
-        p_form.space_before = Pt(6)
+        p_sub = tf.add_paragraph()
+        p_sub.text = sub
+        p_sub.font.name = FONT_HEADING
+        p_sub.font.size = Pt(11)
+        p_sub.font.bold = True
+        p_sub.font.color.rgb = TEXT_DARK
+        p_sub.space_before = Pt(2)
 
-        p_note = tf.add_paragraph()
-        p_note.text = note
-        p_note.font.name = FONT_BODY
-        p_note.font.size = Pt(11)
-        p_note.font.color.rgb = TEXT_LIGHT
-        p_note.space_before = Pt(26)
+        p_desc = tf.add_paragraph()
+        p_desc.text = desc
+        p_desc.font.name = FONT_BODY
+        p_desc.font.size = Pt(10)
+        p_desc.font.color.rgb = TEXT_MUTED
+        p_desc.space_before = Pt(8)
+
+    # Footnote
+    tb_fn = slide6.shapes.add_textbox(Inches(0.9), Inches(6.85), Inches(11.533), Inches(0.35))
+    tf_fn = tb_fn.text_frame
+    p_fn = tf_fn.paragraphs[0]
+    p_fn.alignment = PP_ALIGN.CENTER
+    p_fn.text = "Cryotank Gravimetric Index Gi = 0.50 (M_tank = M_fuel)  •  Raymer Statistical Empty Weight Sizing"
+    p_fn.font.name = FONT_BODY
+    p_fn.font.size = Pt(10.5)
+    p_fn.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
     # SLIDE 7: The concept (AI enhanced sketch)
