@@ -155,46 +155,102 @@ def build_minimal_presentation(output_paths):
     p_st.font.color.rgb = CYAN_ACCENT
 
     # =========================================================================
-    # SLIDE 2: First Sketch (Seamlessly Blended Luminous Pencil Art)
+    # SLIDE 2: First Sketch (Split Stage: Hero Sketch + 3 Concept Pillars)
     # =========================================================================
     slide2 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide2)
     add_header(slide2, "Concept Origin", "First sketch")
 
-    # Seamlessly Floating Sketch
+    # Left: Floating Sketch (height = 5.3 in)
     if os.path.exists(img1_blended):
-        slide2.shapes.add_picture(img1_blended, Inches(4.85), Inches(1.45), height=Inches(5.0))
+        slide2.shapes.add_picture(img1_blended, Inches(0.9), Inches(1.4), height=Inches(5.3))
 
-    # Minimal Caption
-    tb_cap2 = slide2.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
-    tf_cap2 = tb_cap2.text_frame
-    p_c2 = tf_cap2.paragraphs[0]
-    p_c2.alignment = PP_ALIGN.CENTER
-    p_c2.text = "Initial hand-drawn configuration sketch  •  80 m wingspan blended wing body planform"
-    p_c2.font.name = FONT_BODY
-    p_c2.font.size = Pt(11)
-    p_c2.font.color.rgb = TEXT_MUTED
+    # Right: 3 Sleek Concept Pillars
+    pillars = [
+        ("01", "80 m ICAO Code F Span", "Full span compliant with existing international airport gates without folding wings.", CYAN_ACCENT),
+        ("02", "Muscular Lifting Centerbody", "Deep airfoil section provides internal volume for 610 m³ cryogenic LH2 tanks and 430 pax cabin.", TEXT_WHITE),
+        ("03", "Upper-Deck Mounted Engines", "Aft deck shields airport communities from turbofan noise while protecting intakes from debris.", CYAN_ACCENT)
+    ]
+    for idx, (num, title, desc, col) in enumerate(pillars):
+        by = Inches(1.5 + idx * 1.7)
+        add_card(slide2, Inches(5.2), by, Inches(7.233), Inches(1.5))
+        
+        # Number badge
+        tb_n = slide2.shapes.add_textbox(Inches(5.45), by + Inches(0.2), Inches(0.8), Inches(1.0))
+        tf_n = tb_n.text_frame
+        p_n = tf_n.paragraphs[0]
+        p_n.text = num
+        p_n.font.name = FONT_HEADING
+        p_n.font.size = Pt(22)
+        p_n.font.bold = True
+        p_n.font.color.rgb = col
+
+        # Text content
+        tb_t = slide2.shapes.add_textbox(Inches(6.3), by + Inches(0.2), Inches(5.9), Inches(1.1))
+        tf_t = tb_t.text_frame
+        tf_t.word_wrap = True
+        
+        p_title = tf_t.paragraphs[0]
+        p_title.text = title
+        p_title.font.name = FONT_HEADING
+        p_title.font.size = Pt(14)
+        p_title.font.bold = True
+        p_title.font.color.rgb = TEXT_WHITE
+
+        p_desc = tf_t.add_paragraph()
+        p_desc.text = desc
+        p_desc.font.name = FONT_BODY
+        p_desc.font.size = Pt(11)
+        p_desc.font.color.rgb = TEXT_LIGHT
+        p_desc.space_before = Pt(3)
 
     # =========================================================================
-    # SLIDE 3: Sizing Mission (Native High-Res Vector Chart)
+    # SLIDE 3: Sizing Mission (Hero Vector Chart + 3 Regulatory Phase Cards)
     # =========================================================================
     slide3 = prs.slides.add_slide(blank_layout)
     set_slide_background(slide3)
     add_header(slide3, "Mission Profile", "Sizing mission")
 
-    # Seamlessly Blended Mission Vector Chart
+    # Top: Native Mission Profile Vector Chart (width = 11.533 in, height = 3.6 in)
     if os.path.exists(img2_blended):
-        slide3.shapes.add_picture(img2_blended, Inches(1.8), Inches(1.45), width=Inches(9.733))
+        slide3.shapes.add_picture(img2_blended, Inches(0.9), Inches(1.35), width=Inches(11.533))
 
-    # Caption Tag
-    tb_cap3 = slide3.shapes.add_textbox(Inches(0.9), Inches(6.75), Inches(11.533), Inches(0.35))
-    tf_cap3 = tb_cap3.text_frame
-    p_c3 = tf_cap3.paragraphs[0]
-    p_c3.alignment = PP_ALIGN.CENTER
-    p_c3.text = "Design Range: 12,500 km at FL350 (M0.85)  •  200 nm Diversion  •  30 min Loiter + 3% Contingency"
-    p_c3.font.name = FONT_BODY
-    p_c3.font.size = Pt(11)
-    p_c3.font.color.rgb = TEXT_MUTED
+    # Bottom: 3 Regulatory Phase Cards (CS-25 Requirements)
+    phases = [
+        ("PRIMARY CRUISE", "12,500 km", "Mach 0.85 at FL350 (10,668 m)", CYAN_ACCENT),
+        ("ALTERNATE DIVERSION", "200 nm (370 km)", "FL250 cruise to alternate airport (CS-25)", GOLD_ACCENT),
+        ("RESERVE & CONTINGENCY", "30 min + 3%", "Loiter at 1,500 ft + 3% trip fuel contingency", RGBColor(192, 132, 252))
+    ]
+    for idx, (lbl, val, note, col) in enumerate(phases):
+        bx = Inches(0.9 + idx * 3.9)
+        by = Inches(5.2)
+        add_card(slide3, bx, by, Inches(3.733), Inches(1.85))
+        
+        tb = slide3.shapes.add_textbox(bx + Inches(0.3), by + Inches(0.2), Inches(3.133), Inches(1.4))
+        tf = tb.text_frame
+        tf.word_wrap = True
+        
+        p = tf.paragraphs[0]
+        p.text = lbl
+        p.font.name = FONT_BODY
+        p.font.size = Pt(10)
+        p.font.bold = True
+        p.font.color.rgb = TEXT_MUTED
+
+        p_val = tf.add_paragraph()
+        p_val.text = val
+        p_val.font.name = FONT_HEADING
+        p_val.font.size = Pt(20)
+        p_val.font.bold = True
+        p_val.font.color.rgb = col
+        p_val.space_before = Pt(2)
+
+        p_note = tf.add_paragraph()
+        p_note.text = note
+        p_note.font.name = FONT_BODY
+        p_note.font.size = Pt(10.5)
+        p_note.font.color.rgb = TEXT_LIGHT
+        p_note.space_before = Pt(3)
 
     # =========================================================================
     # SLIDE 4: Engine Performance (Native Vector SFC Chart + Metrics)
