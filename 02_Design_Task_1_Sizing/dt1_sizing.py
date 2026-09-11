@@ -191,41 +191,26 @@ fuel_fraction_total = fuel_fraction_nominal * 1.03  # 18.27% of MTOW
 
 
 # =============================================================================
-# 5. ITERATIVE MTOW & OEW SIZING LOOP (Including Cryotank Mass)
 # =============================================================================
-# SOURCE: Raymer (2018) Ch. 3 Sizing Algorithm adapted for Cryogenic Hydrogen (Kick-off Slide 12)
-# Weight Buildup: MTOW = W_payload + W_crew + W_empty_base + W_tank + W_fuel
+# 5. MTOW & OEW SIZING (With Fixed 120-Tonne Airframe Weight & Cryotanks)
+# =============================================================================
+# User Design Requirement: Baseline Airframe Mass = 120.0 tonnes (120,000 kg)
+# Covers: BWB composite airframe, engines, nacelles, landing gear, cabin interior, avionics.
 #
-# Since Gi = 0.50 (Slide 10): W_tank = W_fuel = Fuel_Fraction * MTOW
-# Therefore: W_tank + W_fuel = 2 * Fuel_Fraction * MTOW
-# Sizing Equation: MTOW = (W_payload + W_crew) / (1 - 2*Fuel_Fraction - We_no_tank)
+# Sizing Equation:
+# MTOW = W_payload + W_crew + W_airframe + W_tank + W_fuel
+# Since Gi = 0.50: W_tank = W_fuel = Fuel_Fraction * MTOW
+# MTOW = (W_payload + W_crew + W_airframe) / (1 - 2 * Fuel_Fraction)
 
-mtow_guess = 220000.0   # Initial guess in kg (220 tonnes)
-tolerance = 0.01        # Convergence tolerance in kg
-max_iter = 100
+m_airframe = 120000.0  # 120,000 kg (120.0 tonnes)
 
-for i in range(max_iter):
-    # SOURCE: Raymer (2018) Table 3.1 empty weight correlation for civil transports:
-    # Baseline: 0.88 * (MTOW)^(-0.06) * 0.90 (0.90 factor accounts for 2050 advanced carbon composites)
-    #
-    # Subtraction of 0.020 (-2.0% MTOW):
-    # Conventional wing integral kerosene tanks, boost pumps, and plumbing are removed.
-    we_w0_no_tank = 0.88 * (mtow_guess ** -0.06) * 0.90
-    
-    # Sizing denominator with cryogenic tank mass factor
-    denominator = 1.0 - (2.0 * fuel_fraction_total) - we_w0_no_tank
-    
-    mtow_calculated = (payload_mass + crew_mass) / denominator
-    
-    if abs(mtow_calculated - mtow_guess) < tolerance:
-        mtow = mtow_calculated
-        break
-    mtow_guess = 0.5 * (mtow_guess + mtow_calculated)
+# Sizing denominator with 2x fuel fraction (Fuel + Dry Cryotanks)
+denominator = 1.0 - (2.0 * fuel_fraction_total)
+mtow = (payload_mass + crew_mass + m_airframe) / denominator
 
 # Breakdown of mass components
 m_fuel = mtow * fuel_fraction_total       # Usable Liquid Hydrogen (kg)
 m_tank = m_fuel                           # Cryotank structural mass (kg, Gi = 0.50)
-m_airframe = mtow * we_w0_no_tank         # Airframe structure, engines, avionics, landing gear (kg)
 m_oew = m_airframe + m_tank               # Total Operating Empty Weight (kg)
 
 # Cryotank storage volume sizing (Liquid LH2 volume + 10% ullage & multilayer insulation)
@@ -238,7 +223,7 @@ vol_cryo_total = vol_lh2_liquid * 1.10    # 10% allowance for boil-off ullage sp
 # =============================================================================
 if __name__ == "__main__":
     print("=" * 72)
-    print("  EXAELIA HYDROGEN TRANSPORT — SIZING RESULTS (DT1)")
+    print("  EXAELIA HYDROGEN TRANSPORT — SIZING RESULTS (120t Airframe)")
     print("=" * 72)
     print(f"  Maximum Take-Off Weight (MTOW) : {mtow:10.1f} kg ({mtow/1000:6.2f} tonnes)")
     print(f"  Operating Empty Weight (OEW)   : {m_oew:10.1f} kg ({m_oew/1000:6.2f} tonnes)")
@@ -246,11 +231,12 @@ if __name__ == "__main__":
     print(f"    - Cryogenic LH2 Tanks (50%)  : {m_tank:10.1f} kg ({m_tank/1000:6.2f} tonnes)")
     print(f"  Usable Liquid Hydrogen Fuel    : {m_fuel:10.1f} kg ({m_fuel/1000:6.2f} tonnes)")
     print(f"  Design Payload (430 Pax+Cargo) : {payload_mass:10.1f} kg ({payload_mass/1000:6.2f} tonnes)")
+    print(f"  Flight & Cabin Crew (12 Crew)  : {crew_mass:10.1f} kg ({crew_mass/1000:6.2f} tonnes)")
     print(f"  Total Cryotank Storage Volume  : {vol_cryo_total:10.1f} m3 (Liquid: {vol_lh2_liquid:.1f} m3)")
     print("-" * 72)
     print("  MISSION FUEL FRACTIONS & STRUCTURAL RATIOS:")
     print(f"    - Cruise Segment Fraction (ff_5) : {ff_5:.4f} (Breguet: 12,500 km)")
     print(f"    - Total Usable Fuel Fraction     : {fuel_fraction_total*100:.2f}% of MTOW")
-    print(f"    - Airframe Empty Fraction (We/W0): {we_w0_no_tank*100:.2f}% of MTOW")
+    print(f"    - Airframe Empty Fraction (We/W0): {(m_airframe/mtow)*100:.2f}% of MTOW")
     print(f"    - Total OEW Fraction (OEW/MTOW)  : {(m_oew/mtow)*100:.2f}% of MTOW")
     print("=" * 72)

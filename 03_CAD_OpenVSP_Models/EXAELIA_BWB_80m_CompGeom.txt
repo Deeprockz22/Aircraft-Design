@@ -1,0 +1,57 @@
+...Comp Geom...
+18 Num Comps
+51 Total Num Meshes
+35184 Total Num Tris
+
+Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
+ 2460.430   1223.040   3342.968   1792.265  EXAELIA_BWB_Airframe
+   65.811      0.017     44.543      0.013  Engine_Port    
+   19.152      0.077      1.951      0.009  Pylon_Port     
+   19.152      0.157      1.951      0.017  Pylon_Port     
+   65.811      0.019     44.543      0.014  Engine_Stbd    
+   19.152      0.186      1.951      0.020  Pylon_Stbd     
+   19.152      0.240      1.951      0.026  Pylon_Stbd     
+  473.515     11.500    394.623     10.337  Unified_Theater_Cabin_Deck
+   98.000      0.000     65.456      0.000  LH2_Tank_Outboard_Fwd_Port
+   98.000      0.000     65.456      0.000  LH2_Tank_Outboard_Fwd_Stbd
+   81.122      0.000     48.994      0.000  LH2_Tank_Outboard_Mid_Port
+   81.122      0.000     48.994      0.000  LH2_Tank_Outboard_Mid_Stbd
+   97.104      0.000     66.551      0.000  LH2_Tank_Aft_Core_Port
+   97.104      0.000     66.551      0.000  LH2_Tank_Aft_Core_Stbd
+   15.795      0.000      4.106      0.000  Nose_Landing_Gear
+   24.067      0.000      9.036      0.000  Main_Landing_Gear_Port
+   24.067      0.000      9.036      0.000  Main_Landing_Gear_Stbd
+ 3758.556   1249.642   4218.660   1512.792  MeshGeom       
+ 2668.659   1224.789   3439.859   1702.743  MeshGeom       
+ 1025.968     11.201    756.624      8.909  MeshGeom       
+-------------------------------------------------
+11211.739   3720.869  12633.804   5027.145  Totals         
+
+Tag_Theo_Area   Tag_Wet_Area    Tag_Name
+     1230.215        613.485    EXAELIA_BWB_Airframe_S_Surf0
+     1230.215        609.555    EXAELIA_BWB_Airframe_S_Surf1
+       65.811          0.017    Engine_Port_S_Surf0
+       19.152          0.077    Pylon_Port_S_Surf0
+       19.152          0.157    Pylon_Port_S_Surf1
+       65.811          0.019    Engine_Stbd_S_Surf0
+       19.152          0.186    Pylon_Stbd_S_Surf0
+       19.152          0.240    Pylon_Stbd_S_Surf1
+      473.515         11.500    Unified_Theater_Cabin_Deck_S_Surf0
+       98.000          0.000    LH2_Tank_Outboard_Fwd_Port_S_Surf0
+       98.000          0.000    LH2_Tank_Outboard_Fwd_Stbd_S_Surf0
+       81.122          0.000    LH2_Tank_Outboard_Mid_Port_S_Surf0
+       81.122          0.000    LH2_Tank_Outboard_Mid_Stbd_S_Surf0
+       97.104          0.000    LH2_Tank_Aft_Core_Port_S_Surf0
+       97.104          0.000    LH2_Tank_Aft_Core_Stbd_S_Surf0
+       15.795          0.000    Nose_Landing_Gear_S_Surf0
+       24.067          0.000    Main_Landing_Gear_Port_S_Surf0
+       24.067          0.000    Main_Landing_Gear_Stbd_S_Surf0
+     2490.038        633.968    MeshGeom_S_Surf0
+     1268.518        615.673    MeshGeom_S_Surf1
+     1400.140        617.634    MeshGeom_S_Surf0
+     1268.518        607.155    MeshGeom_S_Surf1
+     1025.968         11.201    MeshGeom_S_Surf0
+WARNING: 3 open meshes merged
+     Merged: EXAELIA_BWB_Airframe
+     Merged: MeshGeom
+     Merged: MeshGeom
