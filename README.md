@@ -32,25 +32,25 @@ Department of Mechanics and Maritime Sciences
 | **Cruise Speed** | **Mach 0.85** (252 m/s TAS) | FL350 (10,668 m ISA conditions) |
 | **Passenger Capacity** | **430 passengers** | 3-class single-deck theater cabin layout |
 | **Cargo Capacity** | **10,750 kg** (44 LD3 containers) | Lower deck cargo bay |
-| **Maximum Take-Off Weight (MTOW)** | **275,017 kg** (275.02 t) | Converged via iterative weight sizing |
-| **Operating Empty Weight (OEW)** | **170,004 kg** (170.00 t) | 120.0 t airframe + 50.0 t cryotanks |
-| **Mission Fuel (LH₂)** | **50,004 kg** (50.00 t) | 18.18% mission fuel fraction (Breguet) |
-| **Cryogenic Storage Volume** | **774.7 m³** | 6 vacuum-insulated tanks (10% ullage) |
+| **Maximum Take-Off Weight (MTOW)** | **283,471 kg** (283.47 t) | Converged via iterative weight sizing |
+| **Operating Empty Weight (OEW)** | **174,231 kg** (174.23 t) | 120.0 t airframe + 54.2 t cryotanks |
+| **Mission Fuel (LH₂)** | **54,231 kg** (54.23 t) | 19.13% mission fuel fraction (Breguet) |
+| **Cryogenic Storage Volume** | **840.2 m³** | 6 vacuum-insulated tanks (10% ullage) |
 | **Aerodynamic Efficiency (L/D)** | **17.75 cruise / 20.50 loiter** | Aspect ratio 9.50, Oswald e = 0.85 |
-| **Engine SFC (LH₂ Cruise)** | **4.779 mg/(N·s)** | Converted from 13.4 mg/(N·s) Jet-A baseline |
+| **Engine SFC (LH₂ Cruise)** | **5.172 mg/(N·s)** | Converted from 14.5 mg/(N·s) Jet-A baseline (Kick-off Slide 13) |
 
 ---
 
 ## Mass Breakdown
 
 ```
-Take-Off Weight: 275.02 tonnes
-├── Operating Empty Weight (OEW): 170.00 t (61.8%)
-│   ├── Baseline Airframe & Systems: 120.00 t (43.6%)
-│   └── Cryotanks (Gi = 0.50):        50.00 t (18.2%)
-├── Usable Fuel (Liquid Hydrogen):   50.00 t (18.2%)
-├── Payload (430 Pax + Cargo):        53.75 t (19.5%)
-└── Flight & Cabin Crew (12 crew):     1.26 t  (0.5%)
+Take-Off Weight: 283.47 tonnes
+├── Operating Empty Weight (OEW): 174.23 t (61.5%)
+│   ├── Baseline Airframe & Systems: 120.00 t (42.3%)
+│   └── Cryotanks (Gi = 0.50):        54.23 t (19.1%)
+├── Usable Fuel (Liquid Hydrogen):   54.23 t (19.1%)
+├── Payload (430 Pax + Cargo):        53.75 t (19.0%)
+└── Flight & Cabin Crew (12 crew):     1.26 t  (0.4%)
 ```
 
 ---
@@ -67,19 +67,19 @@ python3 dt1_sizing.py
 ```text
 AETHER LH2 BWB - Sizing Results
 --------------------------------------------------
-MTOW                  :  275017.3 kg  (275.02 t)
-Operating Empty (OEW) :  170003.6 kg  (170.00 t)
+MTOW                  :  283471.2 kg  (283.47 t)
+Operating Empty (OEW) :  174230.6 kg  (174.23 t)
   - Baseline Airframe :  120000.0 kg  (120.00 t)
-  - Cryotanks (Gi=0.5):   50003.6 kg  ( 50.00 t)
-Mission Fuel (LH2)    :   50003.6 kg  ( 50.00 t)
+  - Cryotanks (Gi=0.5):   54230.6 kg  ( 54.23 t)
+Mission Fuel (LH2)    :   54230.6 kg  ( 54.23 t)
 Payload (430 Pax)     :   53750.0 kg  ( 53.75 t)
 Crew (12)             :    1260.0 kg  (  1.26 t)
-Cryotank Volume       :     774.7 m3  (liquid: 704.3 m3)
+Cryotank Volume       :     840.2 m3  (liquid: 763.8 m3)
 --------------------------------------------------
-Sizing Loop           : Converged in 16 iterations from 220.0 t
-LH2 Cruise SFC        : 4.779 mg/(N*s)
-Cruise fuel burn      : 12.24%
-Total fuel fraction   : 18.18%
+Sizing Loop           : Converged in 17 iterations from 220.0 t
+LH2 Cruise SFC        : 5.172 mg/(N*s)
+Cruise fuel burn      : 13.17%
+Total fuel fraction   : 19.13%
 ```
 
 ---

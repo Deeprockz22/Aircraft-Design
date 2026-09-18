@@ -35,9 +35,9 @@ ld_max = 0.5 * math.sqrt((math.pi * aspect_ratio * oswald_e) / cd0)
 ld_cruise = 0.866 * ld_max
 ld_loiter = ld_max
 
-# Engine specific fuel consumption
-sfc_jeta_cruise = 13.4e-6  # kg/(N*s)
-sfc_jeta_loiter = 11.0e-6 * (13.4 / 13.5)  # scaled proportionally with cruise SFC
+# Engine specific fuel consumption (Carlos Xisto, MMS236 Kick-off Slide 13)
+sfc_jeta_cruise = 14.5e-6  # kg/(N*s) baseline high-bypass turbofan
+sfc_jeta_loiter = 11.3e-6  # kg/(N*s) low-speed loiter
 lhv_ratio = lhv_jeta / lhv_lh2
 sfc_lh2_cruise = sfc_jeta_cruise * lhv_ratio
 sfc_lh2_loiter = sfc_jeta_loiter * lhv_ratio
