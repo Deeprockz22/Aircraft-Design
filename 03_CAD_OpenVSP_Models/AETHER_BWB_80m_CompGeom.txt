@@ -1,0 +1,63 @@
+...Comp Geom...
+20 Num Comps
+60 Total Num Meshes
+40368 Total Num Tris
+
+Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
+ 2460.430   1223.040   3342.968   1813.335  AETHER_BWB_Airframe
+   65.811      0.017     44.543      0.013  Turbofan_Engine_Center
+   19.152      0.204      1.951      0.023  Engine_Pylon_Center
+   19.152      0.155      1.951      0.017  Engine_Pylon_Center
+   65.811      0.019     44.543      0.014  Turbofan_Engine_Port
+   19.152      0.077      1.951      0.009  Engine_Pylon_Port
+   19.152      0.157      1.951      0.017  Engine_Pylon_Port
+   65.811      0.019     44.543      0.014  Turbofan_Engine_Stbd
+   19.152      0.194      1.951      0.022  Engine_Pylon_Stbd
+   19.152      0.149      1.951      0.017  Engine_Pylon_Stbd
+  473.515     11.500    394.623     10.459  Unified_430Pax_Theater_Cabin
+  108.711      0.000     77.164      0.000  LH2_Tank_Outboard_Fwd_Port
+  108.711      0.000     77.164      0.000  LH2_Tank_Outboard_Fwd_Stbd
+   98.000      0.000     65.456      0.000  LH2_Tank_Outboard_Mid_Port
+   98.000      0.000     65.456      0.000  LH2_Tank_Outboard_Mid_Stbd
+  159.427      0.000    145.513      0.000  LH2_Tank_Aft_Core_Port
+  159.427      0.000    145.513      0.000  LH2_Tank_Aft_Core_Stbd
+   15.795      0.000      4.106      0.000  Nose_Gear_Strut
+   24.067      0.000      9.036      0.000  Main_Gear_Strut_Port
+   24.067      0.000      9.036      0.000  Main_Gear_Strut_Stbd
+ 4042.494   1249.809   4481.371   1511.893  MeshGeom       
+ 2772.774   1225.019   3488.304   1681.740  MeshGeom       
+ 1205.791     11.319    970.889      9.945  MeshGeom       
+-------------------------------------------------
+12063.554   3721.679  13421.935   5027.516  Totals         
+
+Tag_Theo_Area   Tag_Wet_Area    Tag_Name
+     1230.215        613.485    AETHER_BWB_Airframe_S_Surf0
+     1230.215        609.555    AETHER_BWB_Airframe_S_Surf1
+       65.811          0.017    Turbofan_Engine_Center_S_Surf0
+       19.152          0.204    Engine_Pylon_Center_S_Surf0
+       19.152          0.155    Engine_Pylon_Center_S_Surf1
+       65.811          0.019    Turbofan_Engine_Port_S_Surf0
+       19.152          0.077    Engine_Pylon_Port_S_Surf0
+       19.152          0.157    Engine_Pylon_Port_S_Surf1
+       65.811          0.019    Turbofan_Engine_Stbd_S_Surf0
+       19.152          0.194    Engine_Pylon_Stbd_S_Surf0
+       19.152          0.149    Engine_Pylon_Stbd_S_Surf1
+      473.515         11.500    Unified_430Pax_Theater_Cabin_S_Surf0
+      108.711          0.000    LH2_Tank_Outboard_Fwd_Port_S_Surf0
+      108.711          0.000    LH2_Tank_Outboard_Fwd_Stbd_S_Surf0
+       98.000          0.000    LH2_Tank_Outboard_Mid_Port_S_Surf0
+       98.000          0.000    LH2_Tank_Outboard_Mid_Stbd_S_Surf0
+      159.427          0.000    LH2_Tank_Aft_Core_Port_S_Surf0
+      159.427          0.000    LH2_Tank_Aft_Core_Stbd_S_Surf0
+       15.795          0.000    Nose_Gear_Strut_S_Surf0
+       24.067          0.000    Main_Gear_Strut_Port_S_Surf0
+       24.067          0.000    Main_Gear_Strut_Stbd_S_Surf0
+     2754.824        634.117    MeshGeom_S_Surf0
+     1287.670        615.692    MeshGeom_S_Surf1
+     1485.103        617.728    MeshGeom_S_Surf0
+     1287.670        607.292    MeshGeom_S_Surf1
+     1205.791         11.319    MeshGeom_S_Surf0
+WARNING: 3 open meshes merged
+     Merged: AETHER_BWB_Airframe
+     Merged: MeshGeom
+     Merged: MeshGeom
