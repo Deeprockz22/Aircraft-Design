@@ -4,9 +4,9 @@ AETHER 80m Liquid Hydrogen Blended Wing Body Transport Sizing.
 Course: Chalmers MMS236 Aircraft Design - Design Task 1 (Group 13)
 Aircraft: AETHER (430 Pax, 12,500 km range, Mach 0.85 at FL350)
 
-Calculates mission fuel fractions and derives empty weight fractions from
-empirical widebody transport data, composite/BWB structural factors, and
-Carlos Xisto's cryogenic tank sizing guidelines.
+Locked Baseline Airframe: 120.0 tonnes (120,000 kg)
+Backed by empirical widebody peer data, Raymer's transport correlations,
+and Carlos Xisto's Clean Sky 2 cryogenic tank sizing guidelines (Gi = 0.50).
 """
 
 import math
@@ -65,74 +65,54 @@ ff_9 = math.exp(-(1800.0 * g * sfc_lh2_loiter) / ld_loiter)  # 30-min loiter
 ff_total = (1.0 - (ff_1 * ff_2 * ff_3 * ff_4 * ff_5 * ff_6 * ff_7 * ff_8 * ff_9)) * 1.03
 
 # ==============================================================================
-# 3. EMPTY WEIGHT FRACTION DERIVATION (Empirical Widebody Baseline & BWB Physics)
+# 3. BASELINE AIRFRAME MASS & MASS SIZING (Locked at 120.0 tonnes)
 # ==============================================================================
-# Step A: Empirical average of modern widebody transports (A350, B787, B777, A330neo)
-we_empirical_baseline = 0.4964  # 49.64%
+# Locked baseline airframe mass (structure, cabin furnishings, systems, engines)
+# Supported by:
+#  1. Raymer metric transport formula on 278 t: (0.4566 - 0.02) * 278 t = 121.4 t
+#  2. 406-passenger widebody course benchmark: 117.5 t * (430/406) = 124.5 t
+#  3. Modern composite widebody fleet (A350-1000, B787-10) scaled to 2050
+m_airframe = 120000.0  # 120.0 t locked baseline
 
-# Step B: Remove conventional kerosene fuel system (-2.0% MTOW)
-we_no_tank = we_empirical_baseline - 0.0200  # 47.64%
-
-# Step C: 2050 advanced composite technology factor (Raymer 6th ed., p. 60)
-we_composite = we_no_tank * 0.95  # 45.26%
-
-# Step D: Blended Wing Body (BWB) structural benefit (Raymer Ch. 23.2, p. 838 & Carlos Lec 3 Slide 29)
-# Span loading cuts wing-root bending moment by ~50%; elimination of tail cone & empennage.
-# Boeing BWB-450 studies predict 15% structural airframe weight reduction:
-bwb_structural_factor = 0.85
-we_airframe_bwb = we_composite * bwb_structural_factor  # 0.3847 (38.47%)
-
-# ==============================================================================
-# 4. MASS SIZING SOLUTIONS
-# ==============================================================================
-# Model 1: BWB Empirical Scaling Model
-# Sizing Equation: MTOW = (Payload + Crew) / (1 - E_airframe - 2 * Fuel_Fraction)
+# Sizing loop / closed-form solution:
+# MTOW = (Payload + Crew + M_airframe) / (1 - 2 * Fuel_Fraction)
 # where 2 * Fuel_Fraction accounts for fuel + cryotanks (Gi = 0.50 -> M_tank = M_fuel)
-mtow_bwb = (payload_mass + crew_mass) / (1.0 - we_airframe_bwb - 2.0 * ff_total)
-m_fuel_bwb = mtow_bwb * ff_total
-m_tank_bwb = m_fuel_bwb  # Gi = 0.50 (Carlos Kick-off Slide 10)
-m_airframe_bwb = mtow_bwb * we_airframe_bwb
-oew_bwb = m_airframe_bwb + m_tank_bwb
-empty_frac_bwb = oew_bwb / mtow_bwb
-vol_liquid_bwb = m_fuel_bwb / lh2_density
-vol_cryo_bwb = vol_liquid_bwb * 1.10  # 10% ullage & vacuum insulation
+mtow = (payload_mass + crew_mass + m_airframe) / (1.0 - 2.0 * ff_total)
+m_fuel = mtow * ff_total
+m_tank = m_fuel  # Gi = 0.50 (Carlos Kick-off Slide 10)
+m_oew = m_airframe + m_tank
 
-# Model 2: Conservative Fixed-Airframe Benchmark (120.0 t baseline airframe)
-m_airframe_fixed = 120000.0
-mtow_fixed = (payload_mass + crew_mass + m_airframe_fixed) / (1.0 - 2.0 * ff_total)
-m_fuel_fixed = mtow_fixed * ff_total
-m_tank_fixed = m_fuel_fixed
-oew_fixed = m_airframe_fixed + m_tank_fixed
-empty_frac_fixed = oew_fixed / mtow_fixed
-vol_liquid_fixed = m_fuel_fixed / lh2_density
-vol_cryo_fixed = vol_liquid_fixed * 1.10
+# Fractions & volumes
+empty_weight_fraction = m_oew / mtow
+fuel_fraction = m_fuel / mtow
+airframe_fraction = m_airframe / mtow
+payload_fraction = payload_mass / mtow
+crew_fraction = crew_mass / mtow
 
-# Default design point variables (Conservative 120 t baseline: physically robust for 80m / 430 Pax)
-mtow = mtow_fixed
-m_oew = oew_fixed
-m_airframe = m_airframe_fixed
-m_tank = m_tank_fixed
-m_fuel = m_fuel_fixed
-vol_liquid = vol_liquid_fixed
-vol_cryo_total = vol_cryo_fixed
+vol_liquid = m_fuel / lh2_density
+vol_cryo_total = vol_liquid * 1.10  # 10% ullage & vacuum insulation
 
 if __name__ == "__main__":
-    print("=" * 74)
-    print("AETHER 80m Liquid Hydrogen BWB - Mass Sizing & Weight Fractions")
+    print("=" * 72)
+    print("AETHER 80m Liquid Hydrogen BWB - Mass Sizing & Weight Breakdown")
     print("Course: Chalmers MMS236 Aircraft Design | Group 13")
     print("Mission: 430 Pax | 12,500 km | Mach 0.85 at FL350 | Gi = 0.50")
-    print("=" * 74)
-    print(f"LH2 Cruise SFC            : {sfc_lh2_cruise * 1e6:.3f} mg/(N*s) (Jet-A equiv: {sfc_jeta_cruise*1e6:.2f})")
-    print(f"Mission Fuel Fraction     : {ff_total * 100:.2f}% (Cruise burn: {(1.0 - ff_5)*100:.2f}%)")
-    print(f"Fixed Payload + Crew      : {payload_mass + crew_mass:,.1f} kg ({payload_mass/1000:.2f} t Pax/Cargo + {crew_mass/1000:.2f} t Crew)")
-    print("-" * 74)
-    print(f"{'Parameter':<28} | {'1. BWB Empirical Model':<20} | {'2. Conservative Baseline':<20}")
-    print("-" * 74)
-    print(f"{'MTOW':<28} | {mtow_bwb/1000:7.2f} t ({mtow_bwb:9.1f} kg) | {mtow_fixed/1000:7.2f} t ({mtow_fixed:9.1f} kg)")
-    print(f"{'OEW (Empty Weight)':<28} | {oew_bwb/1000:7.2f} t ({empty_frac_bwb*100:5.2f}%)     | {oew_fixed/1000:7.2f} t ({empty_frac_fixed*100:5.2f}%)")
-    print(f"{'  - Airframe Structure':<28} | {m_airframe_bwb/1000:7.2f} t ({we_airframe_bwb*100:5.2f}%)     | {m_airframe_fixed/1000:7.2f} t ({m_airframe_fixed/mtow_fixed*100:5.2f}%)")
-    print(f"{'  - Cryotanks (Gi=0.50)':<28} | {m_tank_bwb/1000:7.2f} t ({ff_total*100:5.2f}%)     | {m_tank_fixed/1000:7.2f} t ({ff_total*100:5.2f}%)")
-    print(f"{'Mission Fuel (LH2)':<28} | {m_fuel_bwb/1000:7.2f} t ({ff_total*100:5.2f}%)     | {m_fuel_fixed/1000:7.2f} t ({ff_total*100:5.2f}%)")
-    print(f"{'Payload Fraction':<28} | {payload_mass/mtow_bwb*100:5.2f}%               | {payload_mass/mtow_fixed*100:5.2f}%")
-    print(f"{'Cryotank Installed Vol':<28} | {vol_cryo_bwb:7.1f} m3 (Liq: {vol_liquid_bwb:5.1f})| {vol_cryo_fixed:7.1f} m3 (Liq: {vol_liquid_fixed:5.1f})")
-    print("=" * 74)
+    print("=" * 72)
+    print(f"LH2 Cruise SFC            : {sfc_lh2_cruise * 1e6:.3f} mg/(N*s)  (Jet-A baseline: {sfc_jeta_cruise*1e6:.2f})")
+    print(f"Mission Fuel Fraction     : {ff_total * 100:.2f}%  (Cruise fuel burn: {(1.0 - ff_5)*100:.2f}%)")
+    print(f"Fixed Payload + Crew      : {payload_mass + crew_mass:,.1f} kg  (Payload: {payload_mass/1000:.2f} t, Crew: {crew_mass/1000:.2f} t)")
+    print("-" * 72)
+    print(f"{'Component':<32} | {'Mass (kg)':<14} | {'Mass (t)':<10} | {'Fraction of MTOW':<16}")
+    print("-" * 72)
+    print(f"{'Baseline Airframe Structure':<32} | {m_airframe:12.1f} kg | {m_airframe/1000:7.2f} t  | {airframe_fraction*100:6.2f}%")
+    print(f"{'Cryotanks (Gi = 0.50)':<32} | {m_tank:12.1f} kg | {m_tank/1000:7.2f} t  | {fuel_fraction*100:6.2f}%")
+    print(f"{'Operating Empty Weight (OEW)':<32} | {m_oew:12.1f} kg | {m_oew/1000:7.2f} t  | {empty_weight_fraction*100:6.2f}%")
+    print(f"{'Mission Fuel (Liquid H2)':<32} | {m_fuel:12.1f} kg | {m_fuel/1000:7.2f} t  | {fuel_fraction*100:6.2f}%")
+    print(f"{'Design Payload (430 Pax + Cargo)':<32} | {payload_mass:12.1f} kg | {payload_mass/1000:7.2f} t  | {payload_fraction*100:6.2f}%")
+    print(f"{'Flight & Cabin Crew (12)':<32} | {crew_mass:12.1f} kg | {crew_mass/1000:7.2f} t  | {crew_fraction*100:6.2f}%")
+    print("-" * 72)
+    print(f"{'Maximum Takeoff Weight (MTOW)':<32} | {mtow:12.1f} kg | {mtow/1000:7.2f} t  | 100.00%")
+    print("=" * 72)
+    print(f"Liquid Hydrogen Volume    : {vol_liquid:.1f} m3")
+    print(f"Total Cryotank Volume     : {vol_cryo_total:.1f} m3  (includes 10% ullage & insulation)")
+    print("=" * 72)
