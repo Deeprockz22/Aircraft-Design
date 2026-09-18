@@ -107,14 +107,14 @@ empty_frac_fixed = oew_fixed / mtow_fixed
 vol_liquid_fixed = m_fuel_fixed / lh2_density
 vol_cryo_fixed = vol_liquid_fixed * 1.10
 
-# Default design point variables
-mtow = mtow_bwb
-m_oew = oew_bwb
-m_airframe = m_airframe_bwb
-m_tank = m_tank_bwb
-m_fuel = m_fuel_bwb
-vol_liquid = vol_liquid_bwb
-vol_cryo_total = vol_cryo_bwb
+# Default design point variables (Conservative 120 t baseline: physically robust for 80m / 430 Pax)
+mtow = mtow_fixed
+m_oew = oew_fixed
+m_airframe = m_airframe_fixed
+m_tank = m_tank_fixed
+m_fuel = m_fuel_fixed
+vol_liquid = vol_liquid_fixed
+vol_cryo_total = vol_cryo_fixed
 
 if __name__ == "__main__":
     print("=" * 74)
